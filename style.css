@@ -1,0 +1,397 @@
+#intro {
+  background-image: url('intro-bg.jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+#intro h1 {
+  font-size: 48px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+#intro p {
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+#game {
+  background-image: url('game-bg.jpg');
+  display: none;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Center vertically */
+  align-items: center;      /* Center horizontally */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-shadow: 1px 1px 3px black;
+  text-align: center;
+  padding: 20px;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.choices img {
+  width: 100px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.choices img:hover {
+  transform: scale(1.1);
+}
+
+#result {
+  font-size: 24px;
+  margin-top: 30px;
+}
+
+#computer-choice {
+  margin-top: 20px;
+}
+
+#computer-choice img {
+  width: 100px;
+  margin-top: 10px;
+}
+
+/* Game result and computer choice text */
+#result, #computer-choice {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 80%;
+  max-width: 500px;
+  color: #fff;
+}
+
+.modal-content h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+/* Button Styling (unchanged) */
+button {
+  font-size: 20px;
+  padding: 12px 24px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #388e3c;
+}
+/* General Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Intro Page Styling */
+#intro {
+  background-image: url('intro-bg.jpg'); /* make sure this image exists */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+#intro h1 {
+  font-size: 3em;
+  background-color: rgba(0,0,0,0.5);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+#intro p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  background-color: rgba(0,0,0,0.4);
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #388E3C;
+}
+
+/* Game Area */
+#game {
+  height: 100vh;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding-top: 50px;
+}
+
+/* Back Button */
+.back-button.top-left {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 18px;
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+  background-color: #333;
+  color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  color: white;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+}
+const introMusic = new Audio("intro.mp3");
+introMusic.loop = true;
+
+const clickSound = new Audio("click.mp3");
+
+let playerScore = 0;
+let computerScore = 0;
+
+function startGame() {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("game").style.display = "flex";
+
+  if (introMusic.paused) {
+    introMusic.play();
+  }
+}
+
+function showRules() {
+  document.getElementById("rules-modal").style.display = "block";
+}
+
+function closeRules() {
+  document.getElementById("rules-modal").style.display = "none";
+}
+
+window.onclick = function (event) {
+  const modal = document.getElementById("rules-modal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+function play(playerChoice) {
+  clickSound.play();
+
+  const choices = ["rock", "paper", "scissors"];
+  const resultDiv = document.getElementById("result");
+  const computerDiv = document.getElementById("computer-choice");
+
+  resultDiv.innerText = "Waiting for computer...";
+  computerDiv.innerHTML = "";
+  hideQuestion();
+
+  setTimeout(() => {
+    const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+    const nameMap = {
+      rock: "Hunter",
+      paper: "Lawyer",
+      scissors: "Lion",
+    };
+
+    const imageSrcMap = {
+      rock: "hunter.png",
+      paper: "lawyer.png",
+      scissors: "lion.png",
+    };
+
+    const computerLabel = nameMap[computerChoice];
+    const imageSrc = imageSrcMap[computerChoice];
+
+    computerDiv.innerHTML = `
+      <p>Computer chose: ${computerLabel}</p>
+      <img src="${imageSrc}" alt="${computerLabel}" class="computer-img" />
+    `;
+
+    let result = "";
+
+    if (playerChoice === computerChoice) {
+      result = "It's a draw!";
+    } else if (
+      (playerChoice === "rock" && computerChoice === "scissors") ||
+      (playerChoice === "scissors" && computerChoice === "paper") ||
+      (playerChoice === "paper" && computerChoice === "rock")
+    ) {
+      result = "You win!";
+      playerScore++;
+    } else {
+      result = "Computer wins!";
+      computerScore++;
+      showQuestion();
+    }
+
+    document.getElementById("player-score").innerText = playerScore;
+    document.getElementById("computer-score").innerText = computerScore;
+
+    if (playerScore === 10 || computerScore === 10) {
+      if (playerScore === 10) {
+        result += " 🎉 Congratulations! You won the game!";
+      } else {
+        result += " 😞 Sorry! Try again next time!";
+      }
+
+      disableChoices();
+      document.getElementById("play-again").style.display = "inline-block";
+      hideQuestion();
+    }
+
+    resultDiv.innerText = result;
+  }, 1000);
+}
+
+function goBack() {
+  document.getElementById("game").style.display = "none";
+  document.getElementById("intro").style.display = "flex";
+  hideQuestion();
+}
+
+function showQuestion() {
+  document.getElementById("question-container").style.display = "block";
+}
+
+function hideQuestion() {
+  document.getElementById("question-container").style.display = "none";
+  document.getElementById("feedback").innerText = "";
+}
+
+function checkAnswer(answer) {
+  const correctAnswer = "C";
+  const feedback = document.getElementById("feedback");
+
+  if (answer === correctAnswer) {
+    feedback.innerText = "✅ Correct!";
+    feedback.style.color = "green";
+  } else {
+    feedback.innerText = "❌ Try again!";
+    feedback.style.color = "red";
+  }
+}
+
+#score-text {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #222;
+}
+
+#game-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+#play-again {
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 10px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#play-again {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  padding: 10px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+  display: none;
+}
