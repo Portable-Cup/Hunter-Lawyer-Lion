@@ -293,7 +293,6 @@ const questions = [
     answer: "B"
   }
 ];
-];
 
 let currentQuestion = null;
 
@@ -412,4 +411,5 @@ function checkAnswer(answer) {
   checkGameOver();
   setTimeout(hideQuestion, 2000);
 }
+
 
